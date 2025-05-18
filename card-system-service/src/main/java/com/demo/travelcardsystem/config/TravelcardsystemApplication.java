@@ -32,6 +32,7 @@ public class TravelcardsystemApplication {
 
     @Bean
     public RuleCollection loadAllTravelStrategy(TravelStrategy travelStrategy) {
+
         return travelStrategy.loadAllBusinessRules();
     }
 

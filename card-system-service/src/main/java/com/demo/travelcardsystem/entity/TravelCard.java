@@ -15,7 +15,6 @@ public class TravelCard implements Observable<TravelCard> {
     private double balance;
     private Journey currentJourney;
 
-
     // Move observerCollection here instead of the interface
     private final List<Observer<TravelCard>> observerCollection = new ArrayList<>();
 

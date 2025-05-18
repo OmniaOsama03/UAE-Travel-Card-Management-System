@@ -17,17 +17,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
- class CheckinCheckoutTest extends IntegrationTest {
+class CheckinCheckoutTest extends IntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
+
     @Autowired
     private InMemoryCardTransactionRepository inMemoryCardTransactionRepository;
+
     @Autowired
     private TravelHelper travelHelper;
-
 
     @BeforeEach
     void resetRepository() {
@@ -36,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     @DisplayName("User take few trips and check balance at end of the trip")
     @Test
-     void user_take_trip_and_check_balance() throws Exception {
+    void user_take_trip_and_check_balance() throws Exception {
         //GIVEN - User/Travel-card exists in the system
         TravelCard travelCard = travelHelper.directUserRegistration("1A101", 30);
         SwipeRequest swipeRequest = null;
@@ -71,7 +73,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
         System.out.println("Card balance after journey-2 is -> " + inMemoryCardTransactionRepository.findCardByCardNumber(travelCard.getCardNumber()).getBalance());
 
-
         //AND - user take Train Dryden to Slate Falls
         swipeRequest = travelHelper.prepareSwipeRequest(travelCard.getCardNumber(), "Bur Dubai", TransportType.TRAIN);
         mockMvc.perform(post("/api/card/swipe")
@@ -89,8 +90,5 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         mockMvc.perform(get("/api/card/{cardNumber}", travelCard.getCardNumber()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.balance").value("23.45"));
-
     }
-
-
 }

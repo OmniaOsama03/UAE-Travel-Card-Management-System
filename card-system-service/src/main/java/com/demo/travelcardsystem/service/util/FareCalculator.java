@@ -34,12 +34,16 @@ public class FareCalculator {
     public Double calculate(Journey journey) {
         Predicate<Rule> rulePredicate = rule -> rule.isRuleSatisfied(journey);
 
+
+        // Figure out which rule will be applicable out of all provided business rules
         Rule applicableRule = travelStrategy.getRuleCollection().getRules()
                 .stream()
                 .filter(rulePredicate)
                 .min(ruleComparator)
+
                 .orElseThrow(() -> new IllegalStateException("No applicable fare rule found"));
 
+        //finally, return the chargeable fare
         return applicableRule.getChargeableFare();
     }
 }

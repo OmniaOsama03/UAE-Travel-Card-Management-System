@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.function.BiConsumer;
+
 import java.util.function.DoubleConsumer;
+
 
 @Data
 @Component
@@ -18,6 +20,7 @@ public class TravelStrategy {
 
     @NonNull
     private RuleCollection ruleCollection;
+
 
     private DoubleConsumer anyWhereInZoneOneStrategy = chargeableAmount -> {
         Rule rule = new Rule();
@@ -31,6 +34,7 @@ public class TravelStrategy {
 
     };
 
+
     private DoubleConsumer anyOneZoneOutsideZoneOneStrategy = chargeableAmount -> {
         Rule rule = new Rule();
         rule.setChargeableFare(chargeableAmount);
@@ -42,7 +46,9 @@ public class TravelStrategy {
         ruleCollection.addRules(rule);
     };
 
+
     private DoubleConsumer anyTwoZoneIncludingZoneOneStrategy = chargeableAmount -> {
+
         Rule rule = new Rule();
         rule.setChargeableFare(chargeableAmount);
 
@@ -54,6 +60,7 @@ public class TravelStrategy {
 
         ruleCollection.addRules(rule);
     };
+
 
     private DoubleConsumer anyTwoZoneExcludingZoneOneStrategy = chargeableAmount -> {
         Rule rule = new Rule();
@@ -71,10 +78,12 @@ public class TravelStrategy {
         rule.setChargeableFare(chargeableAmount);
 
 
+
         ruleCollection.addRules(rule);
     };
 
     private BiConsumer<Double, TransportType> anyJourneyByBus = (chargeableAmount, transType) -> {
+
         Rule rule = new Rule();
         rule.setChargeableFare(chargeableAmount);
         rule.setTransportType(transType);
